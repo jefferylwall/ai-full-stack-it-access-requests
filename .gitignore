@@ -1,0 +1,5 @@
+# Operational state (history, locks, logs) is per deployment; deliverables/ holds the committed outputs.
+state/
+__pycache__/
+*.pyc
+.env

@@ -1,0 +1,7 @@
+# Dependency lockfile for accessq.
+# Runtime: CPython >= 3.10 (developed and tested on CPython 3.12.3).
+# The application and its tests use only the Python standard library
+# (json, urllib, concurrent.futures, unittest, ...). There are no third-party
+# packages to install, so this lock intentionally lists none.
+#
+# Verify: python -m pip install -r requirements.lock   (installs nothing)
