@@ -3,7 +3,8 @@
 Access-request intake for human review. The current implementation captures
 source bytes, builds message-only extraction prompts, validates completions,
 supports deterministic offline provider scripts and applies ordered review
-routing. The CLI is a later step in [the build plan](planning/plan.md).
+routing. SQLite stores source revisions, attempts and coherent current views.
+Workers and the CLI are later steps in [the build plan](planning/plan.md).
 
 Create a local environment and install the locked dependencies:
 
@@ -36,6 +37,30 @@ attack detection or live extraction accuracy. Unsettled cases such as incomplete
 withdrawals, blank scalars and invalid absolute dates raise
 `PolicyClarificationRequired` where encountered instead of assigning an invented
 review route. The open questions are recorded in the build plan.
+
+The store uses a local SQLite database on one host. Each calling thread or
+process opens its own `Store`. Admission and completion use short write
+transactions; provider calls happen between `start()` and `finish()`. The latest
+admitted generation is current even while pending or running. A late completion
+may finish its historical attempt but cannot replace that current generation.
+`snapshot()` reads queue, extraction and work views from one committed snapshot;
+`earlier_result` explicitly identifies an older success during replacement or
+failure. `history(document_id)` retains all attempts and their source hashes.
+
+Processing fingerprints cover provider, model, endpoint, prompt, schema, request
+parameters, extraction/routing versions, policy bytes and mock fixture identities
+and bytes. Changed settings conservatively refresh every stored document;
+omission alone retains earlier documents. Unchanged successful work is reused,
+and unchanged failures stay visible until a forced retry creates another attempt.
+Credentials, database paths, worker counts and display settings are excluded
+from persisted processing settings. Captured source and fixture bytes are retained
+without pruning. Duplicate basenames in one intake are rejected before admission.
+
+Routing supports the supplied policy and the plan's labelled test-only rule-five
+variant. Other policy changes require a reviewed routing implementation; policy
+prose is not executed. Worker leases, interruption recovery and CLI retry commands
+are not implemented yet. Step 4 verification covers the persistence APIs and two
+database connections while a mock provider call is held, not worker processes.
 
 The plan targets Python 3.10+; verification so far used Python 3.12.3. The task
 and course instructions are in [CHALLENGE.md](CHALLENGE.md) and [docs/](docs/).

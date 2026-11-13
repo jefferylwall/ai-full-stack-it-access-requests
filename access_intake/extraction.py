@@ -47,16 +47,22 @@ class ExtractionValidationError(ValueError):
         self.category = category
 
 
-def build_prompt(source: CapturedSource) -> list[dict[str, str]]:
+def build_prompt(
+    source: CapturedSource, *, instructions: str = INSTRUCTIONS, schema: dict[str, Any] | None = None,
+) -> list[dict[str, str]]:
     return [
-        {"role": "system", "content": INSTRUCTIONS + "\nSchema:\n" + json.dumps(SCHEMA)},
+        {"role": "system", "content": instructions + "\nSchema:\n" + json.dumps(SCHEMA if schema is None else schema)},
         {"role": "user", "content": json.dumps({"message": source.message}, ensure_ascii=False)},
     ]
 
 
-def validate_schema(extraction: Any) -> None:
+def validate_schema(extraction: Any, *, schema: dict[str, Any] | None = None) -> None:
     """Check structure alone; nullable/enum acceptance is not factual approval."""
-    if next(VALIDATOR.iter_errors(extraction), None) is not None:
+    validator = VALIDATOR
+    if schema is not None and schema != SCHEMA:
+        Draft202012Validator.check_schema(schema)
+        validator = Draft202012Validator(schema)
+    if next(validator.iter_errors(extraction), None) is not None:
         # Validator messages can embed provider values. Do not persist them.
         raise ExtractionValidationError(
             "invalid_schema", "Provider extraction does not conform to snapshot.schema.json."
@@ -67,7 +73,9 @@ def _reject_json_constant(value: str) -> None:
     raise ValueError("Non-JSON numeric constant")
 
 
-def validate_completion(envelope: Any, message: str) -> dict[str, Any]:
+def validate_completion(
+    envelope: Any, message: str, *, schema: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Require a completed envelope before parsing or using any output text."""
     if not isinstance(envelope, dict):
         raise ExtractionValidationError("invalid_envelope", "Provider envelope must be an object.")
@@ -84,7 +92,7 @@ def validate_completion(envelope: Any, message: str) -> dict[str, Any]:
         extraction = json.loads(envelope["output_text"], parse_constant=_reject_json_constant)
     except ValueError:
         raise ExtractionValidationError("invalid_json", "Provider output is not valid JSON.") from None
-    validate_schema(extraction)
+    validate_schema(extraction, schema=schema)
     if any(quote not in message for quote in extraction["supporting_quotes"]):
         raise ExtractionValidationError(
             "invalid_evidence", "A supporting quote is absent from the decoded source message."
@@ -112,10 +120,13 @@ def _failure(source: CapturedSource, error: ExtractionValidationError) -> dict[s
     }
 
 
-def extract(source: CapturedSource, provider: Provider) -> dict[str, Any]:
+def extract(
+    source: CapturedSource, provider: Provider, *, instructions: str = INSTRUCTIONS,
+    schema: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     # The provider seam accepts a string; serialize role-separated prompt data.
     # The live adapter will map these roles to its native protocol in step 8.
-    prompt = json.dumps(build_prompt(source), ensure_ascii=False)
+    prompt = json.dumps(build_prompt(source, instructions=instructions, schema=schema), ensure_ascii=False)
     try:
         envelope = provider.complete(prompt)
     except Exception:
@@ -124,7 +135,7 @@ def extract(source: CapturedSource, provider: Provider) -> dict[str, Any]:
             "transport_failure", "Provider request failed; check availability and retry extraction."
         ))
     try:
-        extraction = validate_completion(envelope, source.message)
+        extraction = validate_completion(envelope, source.message, schema=schema)
     except ExtractionValidationError as error:
         return _failure(source, error)
     return {
