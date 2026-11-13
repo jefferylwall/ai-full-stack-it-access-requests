@@ -1,0 +1,12 @@
+{
+  "ready": true,
+  "missing_artifacts": [],
+  "issues": [],
+  "external_checks": {
+    "capture": "unverified",
+    "default_branch": "unverified",
+    "push": "unverified",
+    "classroom": "unverified"
+  },
+  "human_validation": "unverified"
+}

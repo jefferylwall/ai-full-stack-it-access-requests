@@ -18,6 +18,7 @@ test_T01_second_call_holds_named_reply_until_release (test_mock_provider.MockPro
 test_T31_actual_HTTP_construction_configuration_and_CLI_selection (test_openai_provider.RealAdapterContract.test_T31_actual_HTTP_construction_configuration_and_CLI_selection) ... ok
 test_T32_credentials_never_reach_persisted_errors_logs_evidence_or_override_output (test_openai_provider.RealAdapterContract.test_T32_credentials_never_reach_persisted_errors_logs_evidence_or_override_output) ... ok
 test_T33_refusal_interruption_and_bad_native_envelopes_never_route_partial_text (test_openai_provider.RealAdapterContract.test_T33_refusal_interruption_and_bad_native_envelopes_never_route_partial_text) ... ok
+test_T36_missing_artifacts_links_configuration_and_observation_labels (test_release.ReleaseContract.test_T36_missing_artifacts_links_configuration_and_observation_labels) ... ok
 test_T06_complete_request_awaits_system_owner (test_routing.RoutingContract.test_T06_complete_request_awaits_system_owner) ... ok
 test_T07_missing_end_date_clarifies_before_production_risk (test_routing.RoutingContract.test_T07_missing_end_date_clarifies_before_production_risk) ... ok
 test_T08_conflicts_preserve_alternatives_and_clarify (test_routing.RoutingContract.test_T08_conflicts_preserve_alternatives_and_clarify) ... ok
@@ -42,6 +43,6 @@ test_T23_killed_workers_resume_without_losing_committed_work (test_workers.Worke
 test_T24_overlapping_operator_processes_fence_expired_worker (test_workers.WorkerContract.test_T24_overlapping_operator_processes_fence_expired_worker) ... ok
 
 ----------------------------------------------------------------------
-Ran 42 tests in 57.006s
+Ran 43 tests in 56.825s
 
 OK

@@ -196,6 +196,24 @@ in `verification/h1-review.json`. Human requirement validation, capture linkage,
 default-branch push and Classroom submission remain separate; the application
 never fills `planning/validation.md` or performs those actions.
 
+Check the local submission artifacts without contacting external services:
+
+```bash
+python3 -m access_intake.release --root .
+```
+
+The command returns JSON and exits 0 when its local checks pass, or 1 for missing
+artifacts, broken queue/extraction links, inconsistent request configuration or
+incorrect observation labels. It pins the selected export generation once and
+does not modify files. It checks the documented mock submission bundle.
+
+Local readiness leaves human validation and all external release checks
+unverified. The person must complete `planning/validation.md`, verify the
+submitted commit's facilitator-required capture linkage (H2), verify the remote
+default branch and pushed application/output/capture contents (H3), and confirm
+the Classroom receipt contains only the root repository URL (H4). The preflight
+does not perform these actions or infer that they happened from local files.
+
 The supported runtime is Python 3.12; verification uses the installed Python 3.12.3.
 Clean-install checks use that same interpreter. Testing multiple Python versions
 is not required. The task
