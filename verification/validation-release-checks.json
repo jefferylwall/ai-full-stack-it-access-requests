@@ -1,0 +1,37 @@
+{
+  "observed_on": "2026-11-13T20:15:21.728754+00:00",
+  "checked_commit": "2b48d3bc30433aeee3c8951ad98c7f4a4039748a",
+  "implementation_commit": "bf7ad53a8a3ac7d50690b804a081c29fe280ed22",
+  "default_branch": "main",
+  "remote_main_commit": "aea191e6dee4ee3cf7f9e648702e2a8574e0e071",
+  "remote_observation_source": "GitHub get_repo and fetch_commit(main), read during this validation",
+  "remote_url": "https://github.com/jefferylwall/ai-full-stack-it-access-requests",
+  "local_commits_ahead_of_observed_remote": "27",
+  "local_implementation_checkpoint": "01M7B7Z6GA924FYW49QZ1J6YKP",
+  "local_capture_files": [
+    "0/content_hash.txt",
+    "0/full.jsonl",
+    "0/metadata.json",
+    "0/prompt.txt",
+    "0/transcript.jsonl",
+    "metadata.json"
+  ],
+  "facilitator_capture_acceptance": "unverified",
+  "classroom_receipt": "not supplied",
+  "selected_generation": ".deliverables-generations/b46bf10e93384fe2833427ed160678c6",
+  "selected_generation_test_log_sha256": "f307fb49107f8572440cab826cf25f4bcd7351fbba60d6fe8ca7f228e085599d",
+  "current_planning_test_log_sha256": "40270c9e354651d4270e976445b56041780f4f39be4a78bc0d232b6b1f50d615",
+  "selected_generation_test_log_matches_current_path": false,
+  "current_planning_test_log_result": "FAILED (errors=14); missing jsonschema",
+  "validation_suite_command": "env -u API_KEY .venv/bin/python -m unittest discover -s tests -v",
+  "validation_suite_log": "verification/validation-test-run.txt",
+  "validation_suite_result": "43 tests; OK",
+  "validation_suite_log_sha256": "e819db3652426d3901e981ed44f5bf2855ba7c1dab6b4ff52bf91275b7a45726",
+  "reproduction": [
+    "git log -1 --format=full bf7ad53",
+    "git ls-tree -r --name-only refs/entire/checkpoints/KP/01M7B7Z6GA924FYW49QZ1J6YKP",
+    "git show bf7ad53:planning/test-run.txt",
+    "git ls-remote --symref origin HEAD",
+    "env -u API_KEY .venv/bin/python -m unittest discover -s tests -v"
+  ]
+}
