@@ -1,0 +1,11 @@
+Use the plan-from-spec skill on planning/spec.md. Write planning/plan.md only; write no code and no tests yet.
+
+---
+
+<send_user_message_question_reply>
+[{"answer":"Use quoted sentences and literal scoring","question":"The spec leaves business-purpose wording and exact-match scoring undefined (Q-25/Q-31). May the plan use one quoted purpose sentence per message as the expected text, with literal exact-match scoring and semantic differences reported separately?","questionItemId":"[\"request_user_input_async\",\"call_66812dcefb564670a168a81b2c30e826\",0]"}]
+</send_user_message_question_reply>
+
+---
+
+run the following git commands:git add planning/plan.md, git commit -m "Plan: build steps and test plan"
