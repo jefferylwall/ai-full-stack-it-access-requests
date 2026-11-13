@@ -95,6 +95,7 @@ def _provenance(row: dict[str, Any], document: str) -> dict[str, Any]:
         "provider": settings.get("provider"), "model": settings.get("model"),
         "endpoint": settings.get("endpoint"), "parameters": settings.get("parameters"),
         "extraction_version": settings.get("extraction_version"), "routing_version": settings.get("routing_version"),
+        "request_config": settings.get("request_config"),
         "prompt_sha256": _hash(prompt.encode("utf-8")) if isinstance(prompt, str) else None,
         "schema_sha256": _hash(_canonical(schema).encode("utf-8")) if isinstance(schema, dict) else None,
     }

@@ -120,7 +120,7 @@ class WorkerPool:
                     if result["error"] is None:
                         result.update(route(source, result["extraction"], policy_bytes=config.policy_bytes))
                     provider_name = config.settings["provider"]
-                    result["response_source"] = "mock" if provider_name.startswith("mock") else f"{provider_name}/{config.settings['model']}"
+                    result.setdefault("response_source", "mock" if provider_name.startswith("mock") else f"{provider_name}/{config.settings['model']}")
                     if self.before_commit is not None:
                         self.before_commit(claim, result)
                     store.finish(claim["attempt_id"], claim["token"], result)

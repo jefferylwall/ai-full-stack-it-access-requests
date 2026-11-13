@@ -17,6 +17,8 @@ class ProviderError(Exception):
         "unavailable": "Provider temporarily unavailable; check availability and retry extraction.",
         "timeout": "Provider request timed out; check availability and retry extraction.",
         "transport_failure": "Provider request failed; check availability and retry extraction.",
+        "provider_error": "Provider rejected or failed the request; check model, request settings and environment credentials before retrying.",
+        "invalid_envelope": "Provider returned an invalid completion envelope; inspect configuration and retry extraction.",
     }
 
     def __init__(self, category: str, *, status_code: int | None = None) -> None:

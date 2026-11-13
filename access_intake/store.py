@@ -52,7 +52,8 @@ class ProcessingConfig:
     @property
     def processing_settings(self) -> dict[str, Any]:
         """Allowlisted producing settings; credentials/operational knobs stay out."""
-        return {name: self.settings[name] for name in PROCESSING_KEYS}
+        return {**{name: self.settings[name] for name in PROCESSING_KEYS},
+                **({"request_config": self.settings["request_config"]} if "request_config" in self.settings else {})}
 
     @property
     def policy_sha256(self) -> str:

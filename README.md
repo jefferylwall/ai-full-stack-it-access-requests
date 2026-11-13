@@ -46,7 +46,17 @@ selects saved replies named by the lowercase document filename, such as
 `it-001.json`; the default directory is `tests/mock_responses/`. Source bytes and
 reply bytes are captured at admission. Retry and resume use those captured bytes
 and producing settings even if the original files have moved or disappeared.
-Mock mode needs no credentials. The live provider adapter is Step 8.
+Mock mode needs no credentials. The OpenAI Responses adapter is also implemented;
+select it explicitly with `--provider openai` or `PROVIDER=openai`. It reads
+`API_KEY` only at live request time. `MODEL`, `PROVIDER_ENDPOINT` and
+`REQUEST_SETTINGS` configure its model, HTTPS endpoint and JSON request parameters;
+CLI overrides are `--model`, `--endpoint` and `--request-settings` before the command.
+The documented default is `gpt-6-luna`, max output tokens 2048 and reasoning effort
+none, using strict structured output and no tools. See
+[`docs/provider.md`](docs/provider.md) and
+[`config/provider.json`](config/provider.json) for the protocol, credential handling,
+supported settings and verification limits. Automated tests replace credentials
+and HTTP responses; no live model accuracy or availability is claimed.
 
 Run the complete reference corpus and its independent comparison:
 
@@ -129,7 +139,7 @@ current results, not duplicate external execution.
 Provider waits are finite even for held mocks. A timed-out underlying call keeps
 its concurrency slot until it returns, and its late reply cannot publish. If all
 slots remain occupied, pending documents stay recorded for a later run; the pool
-returns without waiting indefinitely. The future live transport must also enforce
+returns without waiting indefinitely. The OpenAI HTTP transport also enforces
 finite I/O timeouts. Step 5 verification uses saved replies, injected errors and
 actual worker subprocess termination after claim and before commit, plus two
 overlapping operators sharing the local database. It does not verify multi-host

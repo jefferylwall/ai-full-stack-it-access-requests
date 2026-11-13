@@ -3,6 +3,7 @@
 import argparse
 from collections import Counter
 import json
+import os
 from pathlib import Path
 import sqlite3
 from time import time
@@ -12,6 +13,7 @@ from .accuracy import DEFAULT_REGISTRY, compare, load_registry
 from .capture import capture
 from .exports import export_snapshot, pin_export
 from .extraction import INSTRUCTIONS, SCHEMA
+from .openai_provider import DEFAULTS, REQUEST_KEYS, OpenAIResponsesProvider
 from .presentation import for_output
 from .providers import MockProvider, SavedResponse
 from .routing import OFFICE_POLICY, PolicyClarificationRequired
@@ -26,6 +28,10 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python3 -m access_intake", description=__doc__)
     parser.add_argument("--database", type=Path, default=Path(".access-intake.sqlite"), help="shared local SQLite database")
     parser.add_argument("--mock-dir", type=Path, default=ROOT / "tests" / "mock_responses", help="saved replies named by lowercase document filename")
+    parser.add_argument("--provider", choices=("mock", "openai"), help="override PROVIDER; default mock")
+    parser.add_argument("--model", help="override MODEL for OpenAI requests")
+    parser.add_argument("--endpoint", help="override PROVIDER_ENDPOINT")
+    parser.add_argument("--request-settings", help="JSON request parameters; overrides REQUEST_SETTINGS")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--request-timeout", type=float, default=30)
     parser.add_argument("--lease-seconds", type=float, default=40)
@@ -70,7 +76,8 @@ def _mock_config(directory: Path) -> ProcessingConfig:
     )
 
 
-def main(argv=None, *, provider_factory=None, clock=time, worker_hooks=None) -> int:
+def main(argv=None, *, provider_factory=None, clock=time, worker_hooks=None,
+         environment=None, http_transport=None, credential_loader=None) -> int:
     """Run the real parser; dependency seams support offline process fault tests."""
     args = _parser().parse_args(argv)
     store = None
@@ -102,8 +109,15 @@ def main(argv=None, *, provider_factory=None, clock=time, worker_hooks=None) -> 
                 config = producing_store.configuration(claim["attempt_id"])
             finally:
                 producing_store.close()
+            if config.settings["provider"] == "openai":
+                return OpenAIResponsesProvider(
+                    model=config.settings["model"], endpoint=config.settings["endpoint"],
+                    parameters=config.settings["parameters"], schema=config.settings["schema"],
+                    request_config=config.settings.get("request_config"), timeout=args.request_timeout,
+                    transport=http_transport, credential_loader=credential_loader,
+                )
             if not config.settings["provider"].startswith("mock"):
-                raise ValueError("This provider is not implemented yet")
+                raise ValueError("Unsupported provider")
             identity = claim["document_id"].lower()
             return MockProvider([SavedResponse(identity, config.fixtures[identity])])
 
@@ -119,7 +133,28 @@ def main(argv=None, *, provider_factory=None, clock=time, worker_hooks=None) -> 
             for path in args.paths:
                 paths.extend(sorted(item for item in path.glob("*.json") if item.is_file()) if path.is_dir() else [path])
             captured = [capture(path) for path in paths]
-            admitted = store.admit(captured, _mock_config(args.mock_dir))
+            public_environment = os.environ if environment is None else environment
+            selected = args.provider or public_environment.get("PROVIDER", "mock")
+            if selected == "mock":
+                processing = _mock_config(args.mock_dir)
+            elif selected == "openai":
+                model = args.model or public_environment.get("MODEL", DEFAULTS["model"])
+                endpoint = args.endpoint or public_environment.get("PROVIDER_ENDPOINT", DEFAULTS["endpoint"])
+                parameter_text = args.request_settings or public_environment.get("REQUEST_SETTINGS")
+                parameters = DEFAULTS["parameters"] if parameter_text is None else json.loads(parameter_text)
+                # Validate configuration before persisting it; construction neither
+                # loads a credential nor initializes the HTTP network stack.
+                adapter = OpenAIResponsesProvider(model=model, endpoint=endpoint, parameters=parameters)
+                processing = ProcessingConfig(
+                    settings={"provider": "openai", "model": adapter.model, "endpoint": adapter.endpoint,
+                              "parameters": adapter.parameters, "prompt": INSTRUCTIONS, "schema": SCHEMA,
+                              "extraction_version": "responses-v1", "routing_version": "1",
+                              "request_config": {name: DEFAULTS[name] for name in REQUEST_KEYS}},
+                    policy_bytes=OFFICE_POLICY, policy_label="office-policy", fixtures={},
+                )
+            else:
+                raise ValueError("Unsupported provider selection")
+            admitted = store.admit(captured, processing)
         elif args.command == "retry":
             history = store.history(args.document)
             if not history:

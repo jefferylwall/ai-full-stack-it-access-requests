@@ -144,9 +144,12 @@ def extract(
         extraction = validate_completion(envelope, source.message, schema=schema)
     except ExtractionValidationError as error:
         return _failure(source, error)
-    return {
+    result = {
         "document_id": source.document_id,
         "source_sha256": source.source_sha256,
         "extraction": extraction,
         "error": None,
     }
+    if isinstance(envelope.get("response_source"), str):
+        result["response_source"] = envelope["response_source"]
+    return result

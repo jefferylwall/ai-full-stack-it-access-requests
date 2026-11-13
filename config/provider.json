@@ -1,0 +1,15 @@
+{
+  "provider": "openai",
+  "model": "gpt-6-luna",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "parameters": {"max_output_tokens": 2048, "reasoning": {"effort": "none"}},
+  "stream": false,
+  "background": false,
+  "store": false,
+  "truncation": "disabled",
+  "tools": [],
+  "tool_choice": "none",
+  "schema_name": "access_request",
+  "schema_path": "snapshot.schema.json",
+  "strict": true
+}
