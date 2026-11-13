@@ -1,0 +1,31 @@
+{
+  "observation": "mock_submission_generation",
+  "generated_on": "2026-11-13T19:38:32.073843+00:00",
+  "test_run": {
+    "status": "not_recorded_yet",
+    "command": "env -u API_KEY python3 -m unittest discover -s tests -v",
+    "path": "planning/test-run.txt"
+  },
+  "source_hashes": {
+    "access_intake/__init__.py": "8a57c08fd13435f5befa1a9f2e5cf4f53cdf607c5587505ea7dc8b63b893fc1e",
+    "access_intake/__main__.py": "59e3e34bb27eaa51c887b0e204c90ed2715799216d56581277049d75a4a5d15e",
+    "access_intake/accuracy.py": "8273113b8ab8c50ee18ae218450f5aef5ed97d42b34b228e3131b5009604be40",
+    "access_intake/capture.py": "7b6eaa1a2d4fee4878b0da041093c504e21e81b35c894f83a115d48160b23f82",
+    "access_intake/cli.py": "51fcd931360ebc94b00aa9e7119bfa52e62355f1c8843c4017229e836ebaf03d",
+    "access_intake/exports.py": "95b0df11b9d116e6f68e6afe5b7bfbf43ee91888d01c7aa95336fd13e6cef3c8",
+    "access_intake/extraction.py": "84d25795a10073de75fa5fccb264081d2f2746327ff6f48cc6a54081197d8760",
+    "access_intake/handover.py": "aa033b3de0aabb73080645ca0b44e07a79e42fe9808345e8071475abf6fb28a3",
+    "access_intake/openai_provider.py": "8a458a4d3ed299bb7a4cab07a25bf1c3852a12fa9f652ee405276d918a3db95d",
+    "access_intake/presentation.py": "1a739ea4d47ff7603eb03febe091c7203c8c9c68f75a40ca84783fc8ac5fb977",
+    "access_intake/providers.py": "984ad1c073194a7286b76582e70683548d23d2ce4cd55180277c549139d00e48",
+    "access_intake/routing.py": "2e0cfb5da1ced92d28587586de76cc5a1526702bfb5480ee5b572ecadeafe44f",
+    "access_intake/store.py": "66c64b0cc2dd33b399badce989e9d247ad0fd49c48735b1b8a8479c9c4007b98",
+    "access_intake/workers.py": "7a278498d4a59d4fdfb2c9ed09ba9bf2dc618137b68c319c5afdae5cd37a788e",
+    "access_intake/workload.py": "6b4cd5602af9905e3a55b560e3fa83884f135f3205db88d0198e84103c0ae805",
+    "config/extraction-prompt.txt": "c0ddb1fe3761dd124b0e25697b168bf73af2d9b8ae641ca245059543d19dd67b",
+    "config/provider.json": "f4c37671fb0720934366b5ee89bc635f3a1f8e5736e46335fd44e691268a9d2c",
+    "snapshot.schema.json": "2802bed75be35046552b6d23f45447b416b440fc8ba5a62a9d1d50d0eebbc636",
+    "requirements.lock": "4e313012a139180478a009ecc9157be4f985795ce62b276454fb32e18cb1c164",
+    "requirements-bootstrap.lock": "1bce5f13d6d1866f194332655d0ac48a6e50898491f1a0d16b9d6c1a008bfca7"
+  }
+}

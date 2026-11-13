@@ -1,0 +1,86 @@
+test_T28_registry_has_all_supplied_source_facts_evidence_and_routes (test_accuracy.AccuracyContract) ... ok
+test_T29_authored_paraphrase_has_independent_expectation_and_fresh_wording (test_accuracy.AccuracyContract) ... ok
+test_T30_comparison_counts_corruption_and_keeps_semantic_checks_separate (test_accuracy.AccuracyContract) ... ok
+test_T25_CLI_intake_live_reads_retry_history_and_resume (test_cli_exports.CLIExportContract) ... ok
+test_T26_export_fields_coherent_pair_and_no_unfinished_final_status (test_cli_exports.CLIExportContract) ... ok
+test_T27_crashes_around_publication_and_reader_pins_one_generation (test_cli_exports.CLIExportContract) ... ok
+test_T02_all_200_words_reach_provider_intact (test_extraction.ExtractionContract) ... ok
+test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines (test_extraction.ExtractionContract) ... ok
+test_T02_metadata_is_excluded_and_message_is_prompt_data (test_extraction.ExtractionContract) ... ok
+test_T03_schema_matrix (test_extraction.ExtractionContract) ... ok
+test_T04_validation_failures_return_no_partial_extraction (test_extraction.ExtractionContract) ... ok
+test_T05_relative_dates_stay_null_with_issues (test_extraction.ExtractionContract) ... ok
+test_T34_clean_offline_setup_commands_and_submission_artifacts (test_handover.HandoverContract) ... FAIL
+test_T35_400_and_2000_documents_preserve_identity_progress_bounds_and_recovery (test_handover.HandoverContract) ... ok
+test_T01_saved_envelope_and_source_facts_with_injected_clock (test_mock_provider.MockProviderContract) ... ok
+test_T01_scripted_exception_then_saved_success (test_mock_provider.MockProviderContract) ... ok
+test_T01_second_call_holds_named_reply_until_release (test_mock_provider.MockProviderContract) ... ok
+test_T31_actual_HTTP_construction_configuration_and_CLI_selection (test_openai_provider.RealAdapterContract) ... ok
+test_T32_credentials_never_reach_persisted_errors_logs_evidence_or_override_output (test_openai_provider.RealAdapterContract) ... ok
+test_T33_refusal_interruption_and_bad_native_envelopes_never_route_partial_text (test_openai_provider.RealAdapterContract) ... ok
+test_T06_complete_request_awaits_system_owner (test_routing.RoutingContract) ... ok
+test_T07_missing_end_date_clarifies_before_production_risk (test_routing.RoutingContract) ... ok
+test_T08_conflicts_preserve_alternatives_and_clarify (test_routing.RoutingContract) ... ok
+test_T09_override_precedes_complete_request_and_withdrawal (test_routing.RoutingContract) ... ok
+test_T10_withdrawals_precede_missing_access_facts (test_routing.RoutingContract) ... ok
+test_T11_clarification_conditions_and_each_required_fact (test_routing.RoutingContract) ... ok
+test_T12_explicit_corrections_replace_superseded_facts (test_routing.RoutingContract) ... ok
+test_T13_production_or_write_or_admin_requires_risk_review (test_routing.RoutingContract) ... ok
+test_T14_successes_await_humans_and_manager_is_only_contact (test_routing.RoutingContract) ... ok
+test_a_mock_reply_is_read_with_no_key_and_no_network (test_starter.MockResponse) ... ok
+test_each_request_export_has_message_text_and_a_hash (test_starter.SuppliedFiles) ... ok
+test_the_schema_names_the_fields_it_requires (test_starter.SuppliedFiles) ... ok
+test_T15_unchanged_success_reuses_attempt_and_producing_provenance (test_store.StoreContract) ... ok
+test_T16_changed_bytes_create_revisions_and_retain_original_source (test_store.StoreContract) ... ok
+test_T17_failed_forced_retry_is_current_without_erasing_success (test_store.StoreContract) ... ok
+test_T18_omissions_retain_documents_and_shared_request_ids_do_not_merge (test_store.StoreContract) ... ok
+test_T19_relevant_settings_refresh_but_operational_settings_do_not (test_store.StoreContract) ... ok
+test_T20_late_completion_is_historical_and_cannot_replace_latest_generation (test_store.StoreContract) ... ok
+test_T21_provider_failure_does_not_block_independent_success (test_workers.WorkerContract) ... ok
+test_T22_held_calls_failures_timeouts_pacing_and_explicit_retry (test_workers.WorkerContract) ... ok
+test_T23_killed_workers_resume_without_losing_committed_work (test_workers.WorkerContract) ... ok
+test_T24_overlapping_operator_processes_fence_expired_worker (test_workers.WorkerContract) ... ok
+
+======================================================================
+FAIL: test_T34_clean_offline_setup_commands_and_submission_artifacts (test_handover.HandoverContract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_handover.py", line 132, in test_T34_clean_offline_setup_commands_and_submission_artifacts
+    self.clean_command(checkout, python, [checkout / "tools" / "install_locked.py", "--wheel-cache", WHEELS], mode="script")
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_handover.py", line 104, in clean_command
+    self.assertEqual(result.returncode, expected, result.stdout[-5000:] + result.stderr[-5000:])
+AssertionError: 1 != 0 : Could not find platform independent libraries <prefix>
+Could not find platform dependent libraries <exec_prefix>
+Consider setting $PYTHONHOME to <prefix>[:<exec_prefix>]
+Python path configuration:
+  PYTHONHOME = (not set)
+  PYTHONPATH = (not set)
+  program name = '/tmp/tmpa0ghviet/clean-checkout/.venv/bin/python'
+  isolated = 0
+  environment = 1
+  user site = 1
+  import site = 1
+  sys._base_executable = '/tmp/tmpa0ghviet/clean-checkout/.venv/bin/python'
+  sys.base_prefix = '/install'
+  sys.base_exec_prefix = '/install'
+  sys.platlibdir = 'lib'
+  sys.executable = '/tmp/tmpa0ghviet/clean-checkout/.venv/bin/python'
+  sys.prefix = '/install'
+  sys.exec_prefix = '/install'
+  sys.path = [
+    '/install/lib/python310.zip',
+    '/install/lib/python3.10',
+    '/install/lib/lib-dynload',
+  ]
+Fatal Python error: init_fs_encoding: failed to get the Python codec of the filesystem encoding
+Python runtime state: core initialized
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x0000784ddf6a2740 (most recent call first):
+  <no Python frame>
+
+
+----------------------------------------------------------------------
+Ran 42 tests in 32.109s
+
+FAILED (failures=1)

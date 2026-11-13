@@ -1,0 +1,95 @@
+{
+  "observation": "mock_workload_verification",
+  "runs": [
+    {
+      "observation": "mock_workload_verification",
+      "documents": 400,
+      "observed_on": "2026-11-13T19:37:35.746669+00:00",
+      "python": "3.12.3",
+      "configuration": {
+        "provider": "mock",
+        "model": "fixture-v1",
+        "workers": 4,
+        "request_timeout": 30,
+        "lease_seconds": 40,
+        "commit_margin": 2,
+        "pace_seconds": 0
+      },
+      "initial": {
+        "succeeded": 399,
+        "failed": 1
+      },
+      "final": {
+        "succeeded": 400,
+        "failed": 0
+      },
+      "provider_calls": 401,
+      "peak_in_flight": 2,
+      "incremental_visible": true,
+      "elapsed_seconds": 2.3287004209996667,
+      "fixture_sha256": "cb7a3b666279c0bd08fa40375c2f56d6dce74679a4a3c1bc36ad2d151487e5ee",
+      "processing_fingerprint": "2aad0ad773cc09a9f226270d5c61078cf1f233e3ce43ed887b53ae435f6c1013",
+      "source_manifest_sha256": "a8b681e86b2c72041a40649f0a3bf11a8647d968501153c5d95341371c047a88",
+      "recovery": {
+        "retried_documents": [
+          "IT-1002.json"
+        ],
+        "preserved_documents": 399
+      },
+      "assertions_observed": {
+        "source_identity_checks": 400,
+        "scalar_record_checks": 400,
+        "coherent_current_records": 400,
+        "coherent_export_records": 400
+      }
+    },
+    {
+      "observation": "mock_workload_verification",
+      "documents": 2000,
+      "observed_on": "2026-11-13T19:37:49.120757+00:00",
+      "python": "3.12.3",
+      "configuration": {
+        "provider": "mock",
+        "model": "fixture-v1",
+        "workers": 4,
+        "request_timeout": 30,
+        "lease_seconds": 40,
+        "commit_margin": 2,
+        "pace_seconds": 0
+      },
+      "initial": {
+        "succeeded": 1999,
+        "failed": 1
+      },
+      "final": {
+        "succeeded": 2000,
+        "failed": 0
+      },
+      "provider_calls": 2001,
+      "peak_in_flight": 2,
+      "incremental_visible": true,
+      "elapsed_seconds": 13.361969622998004,
+      "fixture_sha256": "cb7a3b666279c0bd08fa40375c2f56d6dce74679a4a3c1bc36ad2d151487e5ee",
+      "processing_fingerprint": "2aad0ad773cc09a9f226270d5c61078cf1f233e3ce43ed887b53ae435f6c1013",
+      "source_manifest_sha256": "b3d4d1e469ecb11753c5a0d51399083914e60dd9e609cc4a64670b4c4da841bc",
+      "recovery": {
+        "retried_documents": [
+          "IT-1002.json"
+        ],
+        "preserved_documents": 1999
+      },
+      "assertions_observed": {
+        "source_identity_checks": 2000,
+        "scalar_record_checks": 2000,
+        "coherent_current_records": 2000,
+        "coherent_export_records": 2000
+      }
+    }
+  ],
+  "limits": [
+    "single-host SQLite on a local POSIX filesystem",
+    "mock provider timing only; no live throughput or accuracy claim",
+    "no performance deadline or throughput acceptance target",
+    "recovery may repeat external calls; fencing protects current results"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "status": "reviewed",
+  "actor": "developer",
+  "observed_on": "2026-11-13T19:54:54.802569+00:00",
+  "scope": "H1 artifact content review; human requirement validation remains separate",
+  "artifacts_read": [
+    "README.md",
+    "deliverables/accuracy.md",
+    "deliverables/request-evidence.json",
+    "deliverables/verification.md",
+    "accuracy/expectations.json",
+    "config/extraction-prompt.txt",
+    "config/provider.json",
+    "snapshot.schema.json",
+    "requirements.lock",
+    "requirements-bootstrap.lock"
+  ],
+  "findings": [
+    "All 21 source identities and hashes were checked against captured input files. Each expected scalar has a source-grounded explanation; quoted spans occur verbatim in the decoded message. Reviewed facts include relative-date nulls, unresolved environment and manager conflicts, labelled corrections, changed permission, filename mismatch, withdrawal and override evidence.",
+    "Accuracy distinguishes 252 literal scalar opportunities from evidence, issues, routing and literal array comparisons. The reported agreement is mock fixture verification; the request example is an offline preview with redacted authorization and no live inference.",
+    "README and verification place Security Review before the system owner for risk cases; managers remain contacts and approval remains a human decision.",
+    "README documents exact offline setup, intake, queue, recovery, retry, export, test and accuracy commands. T34 verifies those commands and a nested full suite in a clean environment using the same interpreter.",
+    "Observed workload reports identify configuration, actual elapsed time, peak in-flight calls, held-response progress, one deliberate failure and explicit recovery. Both sizes finish with the expected document counts; no throughput acceptance deadline is claimed.",
+    "Verification separates intended assertions, saved observations and single-host/POSIX/interruption limits. Initial export generations honestly retain their earlier pending review/test status; final publication is rebuilt after the saved passing suite.",
+    "Capture linkage, remote default branch, push, Classroom receipt and planning/validation.md remain human-owned external checks; this review makes no release claim."
+  ],
+  "repairs": [
+    "Host ensurepip was absent: added pinned offline pip bootstrap from a prepared wheel cache.",
+    "Nested credential-read guard caught the starter test reading API_KEY while removing it: removed that environment manipulation while preserving saved-reply and network assertions.",
+    "User clarified that multiple Python versions are unnecessary: documented Python 3.12 and same-interpreter clean setup. The optional Python 3.10 run failed during relocated-interpreter venv startup; its log is retained as out-of-scope diagnostic evidence, not as a required verification result.",
+    "Removed an obsolete reference to a multiple-runtime observations file from generated verification wording."
+  ],
+  "limits": [
+    "No real model calls or live accuracy observations.",
+    "General instruction-override detection and broader office ambiguities remain unverified.",
+    "This developer review does not substitute for human validation or H2-H4."
+  ],
+  "suite_evidence": "planning/test-run.txt",
+  "optional_out_of_scope_diagnostic": "verification/python310-test-run.txt"
+}

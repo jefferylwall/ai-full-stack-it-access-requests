@@ -54,10 +54,17 @@ def export_snapshot(
     store: Store, destination: str | Path, *,
     before_publish: Callable[[Path], None] | None = None,
     after_publish: Callable[[Path], None] | None = None,
+    extra_files=None,
 ) -> Path:
     snapshot = for_output(store.snapshot(), store.path)
     if any(row["processing_state"] not in ("succeeded", "failed") for row in snapshot["extractions"]):
         raise ValueError("Unfinished work must complete before final export")
+    # Render ancillary handover artifacts from the exact same materialized read.
+    extras = extra_files(snapshot) if callable(extra_files) else (extra_files or {})
+    for name, text in extras.items():
+        if (Path(name).name != name or name in (".", "..", "queue.json", "extractions.jsonl")
+                or not isinstance(text, str)):
+            raise ValueError("Extra export artifacts must be distinct flat text filenames")
 
     destination = Path(destination).absolute()
     # Resolve the parent only: resolving destination would follow the old link.
@@ -74,6 +81,8 @@ def export_snapshot(
         json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n" for row in snapshot["extractions"]
     ))
     _write(staging / "queue.json", json.dumps(snapshot["queue"], ensure_ascii=False, indent=2, allow_nan=False) + "\n")
+    for name, text in extras.items():
+        _write(staging / name, text)
     _sync_directory(staging)
     generation = generations / identity
     staging.rename(generation)

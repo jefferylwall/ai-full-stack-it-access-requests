@@ -1,0 +1,2 @@
+# Offline installer bootstrap, separate from the application dependency set.
+pip==24.3.1

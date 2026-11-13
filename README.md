@@ -8,15 +8,21 @@ Independent workers support leases, finite waits and explicit recovery. The CLI
 provides intake, inspection, recovery, retries and paired export publication.
 The remaining work is tracked in [the build plan](planning/plan.md).
 
-Create a local environment and install the locked dependencies:
+Prerequisites: Python 3.12 with `venv` and, for preparing wheels, `pip`. Prepare the
+pinned wheel cache before tests; this is the only dependency-download step.
+A facilitator can supply the cache for a fully offline machine. Include wheels
+for the installed Python 3.12 interpreter and platform used by the application.
 
 ```bash
-python3 -m venv .venv
+python3 -m pip download --only-binary=:all: --dest .wheel-cache -r requirements.lock -r requirements-bootstrap.lock
+python3 -m venv --without-pip .venv
+.venv/bin/python tools/install_locked.py --wheel-cache .wheel-cache
 source .venv/bin/activate
-python3 -m pip install -r requirements.lock
+python3 -m pip check
 ```
 
-Run tests from the repository root with that environment active:
+The bootstrap uses `--no-index` and works without host `ensurepip`. Run tests
+from the repository root with that environment active:
 
 ```bash
 env -u API_KEY python3 -m unittest discover -s tests -v
@@ -25,6 +31,10 @@ env -u API_KEY python3 -m unittest discover -s tests -v
 Tests use saved replies under `tests/mock_responses/`. Extraction tests forbid
 socket access and reads of `API_KEY`. Mock agreement verifies the fixtures and
 application behavior; it does not measure live model accuracy.
+T34 creates a clean venv, installs from the cache, runs the CLI commands and runs
+the full suite there. Its nested suite repeats artifact checks without cloning
+recursively. T35 exercises 400 and 2,000 messages. Set
+`ACCESS_INTAKE_WHEEL_CACHE` to use another prepared cache. Tests never download.
 
 Start with a supplied message and inspect it using the mock provider:
 
@@ -162,6 +172,29 @@ generation current; staged/orphaned directories are never selected by listing
 the generation directory. Step 6 tests exercise both interruption points and a
 reader paused between its two file reads. Publication relies on local POSIX
 filesystem symlinks, atomic rename and directory/file synchronization.
+
+Build the mock submission bundle after recording workloads:
+
+```bash
+python3 -m access_intake.workload --output verification/workload-observations.json
+python3 -m access_intake.handover --database .access-intake.sqlite --output deliverables --workloads verification/workload-observations.json
+```
+
+The workload command uses fresh temporary databases, the authored paraphrase and
+the saved `load-template.json`. It holds the first reply, fails the second once,
+records incremental availability, releases/retries, then validates facts, hashes,
+counts and coherent exports. Elapsed time and peak concurrency are measured;
+there is no throughput acceptance threshold. Actual results and configuration
+are retained in the observation file. Handover requires the completed 21-message
+mock reference corpus and publishes accuracy, request evidence and developer
+verification together with the pair. Generic `export` publishes only the pair;
+run `handover` again for a full bundle after later changes.
+
+Save the final full-suite output as `planning/test-run.txt`, then rebuild handover
+so its generation evidence references that run. H1 developer review is recorded
+in `verification/h1-review.json`. Human requirement validation, capture linkage,
+default-branch push and Classroom submission remain separate; the application
+never fills `planning/validation.md` or performs those actions.
 
 The supported runtime is Python 3.12; verification uses the installed Python 3.12.3.
 Clean-install checks use that same interpreter. Testing multiple Python versions

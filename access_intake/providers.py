@@ -52,7 +52,7 @@ class HeldResponse:
     There is no wall-clock delay or simulated provider reply involved.
     """
 
-    fixture: str | Path
+    fixture: str | Path | SavedResponse
     entered: Event
     release: Event
 
