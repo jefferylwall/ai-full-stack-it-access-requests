@@ -46,8 +46,23 @@ selects saved replies named by the lowercase document filename, such as
 `it-001.json`; the default directory is `tests/mock_responses/`. Source bytes and
 reply bytes are captured at admission. Retry and resume use those captured bytes
 and producing settings even if the original files have moved or disappeared.
-Mock mode needs no credentials. The complete verification corpus and accuracy
-command are Step 7; the live provider adapter is Step 8.
+Mock mode needs no credentials. The live provider adapter is Step 8.
+
+Run the complete reference corpus and its independent comparison:
+
+```bash
+python3 -m access_intake intake materials/requests tests/inputs/IT-021.json
+python3 -m access_intake export --output deliverables
+python3 -m access_intake accuracy --input deliverables/extractions.jsonl --expectations accuracy/expectations.json
+```
+
+[`accuracy/expectations.json`](accuracy/expectations.json) freezes 21 source-derived
+expectations with evidence for each scalar and the expected policy route.
+[`docs/accuracy.md`](docs/accuracy.md) specifies the counting procedure, error
+categories, provenance and semantic review limits. The scalar denominator is
+252, including nulls and failed/missing extractions. Literal array comparisons
+and evidence/issue/routing checks are separate. Mock reports are explicitly
+labelled fixture verification and do not measure live model accuracy.
 
 Commands print JSON. Processing commands return 1 when current work contains
 failures or unfinished attempts, and 0 when all current work succeeded. Usage

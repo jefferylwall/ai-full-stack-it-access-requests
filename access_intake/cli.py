@@ -8,6 +8,7 @@ import sqlite3
 from time import time
 from typing import Any
 
+from .accuracy import DEFAULT_REGISTRY, compare, load_registry
 from .capture import capture
 from .exports import export_snapshot, pin_export
 from .extraction import INSTRUCTIONS, SCHEMA
@@ -45,6 +46,9 @@ def _parser() -> argparse.ArgumentParser:
     options = export.add_mutually_exclusive_group()
     options.add_argument("--output", type=Path, default=Path("deliverables"))
     options.add_argument("--read", type=Path, help="pin and read both files from an existing publication")
+    accuracy = commands.add_parser("accuracy", help="compare JSONL records with frozen source expectations")
+    accuracy.add_argument("--input", type=Path, required=True)
+    accuracy.add_argument("--expectations", type=Path, default=DEFAULT_REGISTRY)
     return parser
 
 
@@ -71,6 +75,11 @@ def main(argv=None, *, provider_factory=None, clock=time, worker_hooks=None) -> 
     args = _parser().parse_args(argv)
     store = None
     try:
+        if args.command == "accuracy":
+            records = [json.loads(line) for line in args.input.read_text(encoding="utf-8").splitlines()]
+            report = compare(records, load_registry(args.expectations))
+            _print(report)
+            return 1 if report["has_errors"] else 0
         if args.command == "export" and args.read is not None:
             _print(pin_export(args.read).read())
             return 0
