@@ -1,0 +1,50 @@
+{
+  "cli_version": "0.13.1",
+  "checkpoint_id": "01M7B5A0RZ5SJY8FXGKKH4FZHH",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "access_intake/accuracy.py",
+    "access_intake/cli.py",
+    "access_intake/extraction.py",
+    "access_intake/openai_provider.py",
+    "access_intake/providers.py",
+    "access_intake/store.py",
+    "access_intake/workers.py",
+    "config/provider.json",
+    "docs/provider.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 11942,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 2511872,
+    "output_tokens": 17247,
+    "api_call_count": 7,
+    "subagent_tokens_complete": true
+  },
+  "redaction": {
+    "replacements": 14,
+    "layers": {
+      "betterleaks": 0,
+      "connection_string": 0,
+      "credential_key": 0,
+      "credential_value": 3,
+      "credentialed_uri": 0,
+      "entropy": 16,
+      "key_context": 0,
+      "provider_token": 0,
+      "shell_stdin": 0
+    }
+  }
+}
