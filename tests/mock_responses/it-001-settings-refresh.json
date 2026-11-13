@@ -1,0 +1,4 @@
+{
+  "state": "completed",
+  "output_text": "{\n  \"request_id\": \"IT-001\",\n  \"request_date\": \"2026-10-22\",\n  \"kind\": \"new\",\n  \"requester\": \"Maya Chen\",\n  \"team\": \"Analytics\",\n  \"system\": \"Atlas\",\n  \"environment\": \"staging\",\n  \"permission\": \"read\",\n  \"business_purpose\": \"I'm checking the weekly conversion dashboard with the new event definition changes (before next reporting cycle).\",\n  \"start_date\": \"2026-10-23\",\n  \"end_date\": \"2026-11-06\",\n  \"manager\": \"Priya Shah\",\n  \"supporting_quotes\": [\n    \"Maya Chen from Analytics here, with request IT-001 dated 2026-10-22.\",\n    \"new read access on Atlas in staging from 2026-10-23 to 2026-11-06\",\n    \"My manager is Priya Shah.\",\n    \"I'm checking the weekly conversion dashboard with the new event definition changes (before next reporting cycle).\"\n  ],\n  \"issues\": []\n}"
+}

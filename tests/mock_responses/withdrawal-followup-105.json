@@ -1,0 +1,4 @@
+{
+  "state": "completed",
+  "output_text": "{\"request_id\":\"IT-005\",\"request_date\":\"2026-10-22\",\"kind\":\"withdrawal\",\"requester\":null,\"team\":null,\"system\":null,\"environment\":null,\"permission\":null,\"business_purpose\":null,\"start_date\":null,\"end_date\":null,\"manager\":null,\"supporting_quotes\":[\"Could you please withdraw IT-005? Date: 2026-10-22\"],\"issues\":[\"requester: absent from the message.\",\"team: absent from the message.\",\"system: absent from the message.\",\"environment: absent from the message.\",\"permission: absent from the message.\",\"business_purpose: absent from the message.\",\"start_date: absent from the message.\",\"end_date: absent from the message.\",\"manager: absent from the message.\",\"request_id: filename mismatch: message states IT-005 but document is IT-105.json.\"]}"
+}
