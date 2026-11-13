@@ -9,6 +9,24 @@ from time import monotonic
 from typing import Any, Callable, Iterable, Protocol
 
 
+class ProviderError(Exception):
+    """A categorized provider failure with an allowlisted, credential-free message."""
+
+    MESSAGES = {
+        "rate_limit": "Provider rate limit reached; wait for capacity and retry extraction.",
+        "unavailable": "Provider temporarily unavailable; check availability and retry extraction.",
+        "timeout": "Provider request timed out; check availability and retry extraction.",
+        "transport_failure": "Provider request failed; check availability and retry extraction.",
+    }
+
+    def __init__(self, category: str, *, status_code: int | None = None) -> None:
+        if category not in self.MESSAGES:
+            raise ValueError("Unsupported provider error category")
+        super().__init__(self.MESSAGES[category])
+        self.category = category
+        self.status_code = status_code
+
+
 class Provider(Protocol):
     """Return a completion envelope; extraction validation happens separately."""
 

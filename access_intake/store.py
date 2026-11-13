@@ -9,7 +9,9 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 from pathlib import Path
+import shlex
 import sqlite3
 from time import time
 from typing import Any, Callable, Iterable
@@ -108,6 +110,8 @@ CREATE TABLE IF NOT EXISTS attempts (
     started_at REAL,
     finished_at REAL,
     token TEXT,
+    worker_id TEXT,
+    lease_expires_at REAL,
     result_json TEXT,
     UNIQUE (document_id, generation),
     FOREIGN KEY (document_id, source_sha256) REFERENCES revisions(document_id, source_sha256)
@@ -130,6 +134,13 @@ class Store:
         self._db.execute("PRAGMA journal_mode = WAL")
         self._db.execute("PRAGMA synchronous = FULL")
         self._db.executescript(TABLES)
+        # Upgrade databases created before leases were introduced. Serialize
+        # inspection and ALTER so concurrent openers cannot migrate twice.
+        with self._transaction(write=True):
+            columns = {row["name"] for row in self._db.execute("PRAGMA table_info(attempts)")}
+            for name, sql_type in (("worker_id", "TEXT"), ("lease_expires_at", "REAL")):
+                if name not in columns:
+                    self._db.execute(f"ALTER TABLE attempts ADD COLUMN {name} {sql_type}")
 
     def close(self) -> None:
         if not self._closed:
@@ -151,6 +162,7 @@ class Store:
             "attempt_id", "document_id", "generation", "source_sha256", "fingerprint",
             "policy_sha256", "policy_label", "processing_state", "created_at",
             "started_at", "finished_at",
+            "worker_id", "lease_expires_at",
         )}
         record["settings"] = json.loads(row["settings_json"])
         record["fixture_hashes"] = json.loads(row["fixture_hashes_json"])
@@ -261,8 +273,26 @@ class Store:
                 admissions.append(self._record(self._attempt(attempt_id)))
         return admissions
 
-    def start(self, attempt_id: str) -> dict[str, Any]:
+    def _start_attempt(
+        self, attempt: sqlite3.Row, worker_id: str | None, lease_seconds: float | None,
+    ) -> dict[str, Any]:
+        token = uuid4().hex
+        now = self.clock()
+        expires = None if lease_seconds is None else now + lease_seconds
+        self._db.execute("""
+            UPDATE attempts SET processing_state = 'running', started_at = ?, token = ?,
+                worker_id = ?, lease_expires_at = ? WHERE attempt_id = ?
+        """, (now, token, worker_id, expires, attempt["attempt_id"]))
+        claim = self._record(self._attempt(attempt["attempt_id"]))
+        claim["token"] = token
+        return claim
+
+    def start(
+        self, attempt_id: str, *, worker_id: str | None = None, lease_seconds: float | None = None,
+    ) -> dict[str, Any]:
         """Claim one current pending attempt and commit before any provider call."""
+        if lease_seconds is not None and (not math.isfinite(lease_seconds) or lease_seconds <= 0):
+            raise ValueError("Lease must be finite and positive")
         with self._transaction(write=True):
             attempt = self._attempt(attempt_id)
             current = self._db.execute(
@@ -270,25 +300,88 @@ class Store:
             ).fetchone()["generation"]
             if attempt["processing_state"] != "pending" or attempt["generation"] != current:
                 raise ValueError("Attempt is not current pending work")
-            token = uuid4().hex
-            self._db.execute("""
-                UPDATE attempts SET processing_state = 'running', started_at = ?, token = ?
-                WHERE attempt_id = ?
-            """, (self.clock(), token, attempt_id))
-            claim = self._record(self._attempt(attempt_id))
-            claim["token"] = token
+            claim = self._start_attempt(attempt, worker_id, lease_seconds)
         return claim
+
+    def has_pending(self) -> bool:
+        return self._db.execute("""
+            SELECT 1 FROM attempts a JOIN documents d
+              ON a.document_id = d.document_id AND a.generation = d.generation
+            WHERE a.processing_state = 'pending' LIMIT 1
+        """).fetchone() is not None
+
+    def claim(self, *, worker_id: str, lease_seconds: float) -> dict[str, Any] | None:
+        """Select and claim one pending current document in a single transaction."""
+        if not math.isfinite(lease_seconds) or lease_seconds <= 0:
+            raise ValueError("Lease must be finite and positive")
+        with self._transaction(write=True):
+            attempt = self._db.execute(RECORD_QUERY + """
+                JOIN documents d ON d.document_id = a.document_id AND d.generation = a.generation
+                WHERE a.processing_state = 'pending' ORDER BY a.document_id LIMIT 1
+            """).fetchone()
+            if attempt is None:
+                return None
+            return self._start_attempt(attempt, worker_id, lease_seconds)
+
+    def recover(self) -> list[dict[str, Any]]:
+        """Record expired work as interrupted and admit fresh current attempts.
+
+        Completed/failed attempts and unexpired leases are left alone. All
+        recovery changes commit together, so competing resumptions cannot create
+        duplicate current recovery work. Captured bytes/configuration are reused.
+        """
+        recovered = []
+        with self._transaction(write=True):
+            now = self.clock()
+            expired = self._db.execute("""
+                SELECT * FROM attempts WHERE processing_state = 'running'
+                  AND lease_expires_at IS NOT NULL AND lease_expires_at <= ?
+            """, (now,)).fetchall()
+            for attempt in expired:
+                result = {
+                    "status": "error", "owner": "IT Service Desk", "next_action": "retry-extraction",
+                    "extraction": None, "response_source": None,
+                    "error": {
+                        "category": "interrupted", "message": "Worker lease expired before completion; resume recorded work.",
+                        "attempt_id": attempt["attempt_id"], "document_id": attempt["document_id"],
+                        "source_sha256": attempt["source_sha256"],
+                        "retry_command": "python3 -m access_intake retry " + shlex.quote(attempt["document_id"]) + " --force",
+                    },
+                }
+                self._db.execute("""
+                    UPDATE attempts SET processing_state = 'interrupted', finished_at = ?, result_json = ?
+                    WHERE attempt_id = ?
+                """, (now, _json(result), attempt["attempt_id"]))
+            current_interrupted = self._db.execute("""
+                SELECT a.* FROM attempts a JOIN documents d
+                  ON a.document_id = d.document_id AND a.generation = d.generation
+                WHERE a.processing_state = 'interrupted' ORDER BY a.document_id
+            """).fetchall()
+            for previous in current_interrupted:
+                attempt_id = uuid4().hex
+                generation = previous["generation"] + 1
+                self._db.execute("UPDATE documents SET generation = ? WHERE document_id = ?", (generation, previous["document_id"]))
+                self._db.execute("""
+                    INSERT INTO attempts (attempt_id, document_id, generation, source_sha256,
+                        fingerprint, processing_state, created_at)
+                    VALUES (?, ?, ?, ?, ?, 'pending', ?)
+                """, (attempt_id, previous["document_id"], generation, previous["source_sha256"], previous["fingerprint"], now))
+                recovered.append(self._record(self._attempt(attempt_id)))
+        return recovered
 
     def finish(self, attempt_id: str, token: str, result: dict[str, Any]) -> bool:
         """Retain a completion once; return whether it belongs to current work.
 
         A matching old-generation token may finish its own historical attempt,
         but cannot alter the latest admitted generation. Repeated/wrong tokens
-        cannot modify terminal results. Lease expiry is added with worker recovery.
+        cannot modify terminal results. An expired lease cannot finish even if
+        recovery has not run yet, and can never publish after being reclaimed.
         """
         with self._transaction(write=True):
             attempt = self._attempt(attempt_id)
             if attempt["processing_state"] != "running" or attempt["token"] != token:
+                return False
+            if attempt["lease_expires_at"] is not None and self.clock() >= attempt["lease_expires_at"]:
                 return False
             source = self.source(attempt_id)
             if result.get("document_id") != source.document_id or result.get("source_sha256") != source.source_sha256:

@@ -4,7 +4,8 @@ Access-request intake for human review. The current implementation captures
 source bytes, builds message-only extraction prompts, validates completions,
 supports deterministic offline provider scripts and applies ordered review
 routing. SQLite stores source revisions, attempts and coherent current views.
-Workers and the CLI are later steps in [the build plan](planning/plan.md).
+Independent workers support leases, finite waits and explicit recovery. The CLI
+is a later step in [the build plan](planning/plan.md).
 
 Create a local environment and install the locked dependencies:
 
@@ -42,7 +43,8 @@ The store uses a local SQLite database on one host. Each calling thread or
 process opens its own `Store`. Admission and completion use short write
 transactions; provider calls happen between `start()` and `finish()`. The latest
 admitted generation is current even while pending or running. A late completion
-may finish its historical attempt but cannot replace that current generation.
+with a valid token may finish its historical attempt but cannot replace that
+current generation. Expired or reclaimed worker tokens cannot commit results.
 `snapshot()` reads queue, extraction and work views from one committed snapshot;
 `earlier_result` explicitly identifies an older success during replacement or
 failure. `history(document_id)` retains all attempts and their source hashes.
@@ -58,9 +60,30 @@ without pruning. Duplicate basenames in one intake are rejected before admission
 
 Routing supports the supplied policy and the plan's labelled test-only rule-five
 variant. Other policy changes require a reviewed routing implementation; policy
-prose is not executed. Worker leases, interruption recovery and CLI retry commands
-are not implemented yet. Step 4 verification covers the persistence APIs and two
-database connections while a mock provider call is held, not worker processes.
+prose is not executed. CLI retry commands are not implemented yet.
+
+`WorkerPool` drains claimable pending work using four workers by default. Configure
+`workers`, `request_timeout` (default 30 seconds), `lease_seconds` (40 seconds),
+`commit_margin` (2 seconds), and `pace_seconds` (0). The lease must exceed the
+request timeout plus commit margin. Concurrency and pacing apply within a pool;
+overlapping operators each have their own configured pool. Claims commit before
+requests start, and each attempt records its worker and lease expiry.
+
+`pool.run(resume=True)` records expired work as interrupted and creates fresh
+attempts from captured bytes and producing settings. Unexpired work remains
+claimed. Ordinary pending work is processed; recorded failures require an explicit
+forced retry. There are no hidden provider retries. A crash after a provider
+response can repeat the external call during recovery; fencing prevents duplicate
+current results, not duplicate external execution.
+
+Provider waits are finite even for held mocks. A timed-out underlying call keeps
+its concurrency slot until it returns, and its late reply cannot publish. If all
+slots remain occupied, pending documents stay recorded for a later run; the pool
+returns without waiting indefinitely. The future live transport must also enforce
+finite I/O timeouts. Step 5 verification uses saved replies, injected errors and
+actual worker subprocess termination after claim and before commit, plus two
+overlapping operators sharing the local database. It does not verify multi-host
+storage or live-provider behavior.
 
 The plan targets Python 3.10+; verification so far used Python 3.12.3. The task
 and course instructions are in [CHALLENGE.md](CHALLENGE.md) and [docs/](docs/).

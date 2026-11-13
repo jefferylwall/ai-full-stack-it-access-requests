@@ -12,7 +12,7 @@ from typing import Any
 from jsonschema import Draft202012Validator
 
 from .capture import CapturedSource
-from .providers import Provider
+from .providers import Provider, ProviderError
 
 
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / "snapshot.schema.json"
@@ -129,6 +129,12 @@ def extract(
     prompt = json.dumps(build_prompt(source, instructions=instructions, schema=schema), ensure_ascii=False)
     try:
         envelope = provider.complete(prompt)
+    except ProviderError as error:
+        return _failure(source, ExtractionValidationError(error.category, str(error)))
+    except TimeoutError:
+        return _failure(source, ExtractionValidationError(
+            "timeout", ProviderError.MESSAGES["timeout"],
+        ))
     except Exception:
         # Raw provider errors may contain authorization headers, URLs or secrets.
         return _failure(source, ExtractionValidationError(
