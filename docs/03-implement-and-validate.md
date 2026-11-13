@@ -24,7 +24,9 @@ Start from your committed `planning/plan.md` (`docs/02-plan-with-test-plan.md`).
    record that each test failed before its code existed. If a step's new test already passes
    before any code is written, say so in its commit message (`Test first: <step> (already
    passes)`) rather than making it fail on purpose.
-3. Watch the steps. After each one, run the tests yourself, with `API_KEY` unset:
+3. Watch the steps. Use the plan's single supported Python 3.12 interpreter for
+   setup, clean-install checks and the suite; testing additional Python versions
+   is not required. After each step, run the tests yourself, with `API_KEY` unset:
 
    ```bash
    env -u API_KEY python3 -m unittest discover -s tests

@@ -30,7 +30,11 @@ the check below prints `READY`.
 
    Run every command in these files from the root of that clone.
 
-2. **Check Python.** `python3 --version` prints 3.10 or later.
+2. **Check Python.** The class setup minimum is 3.10 or later. This application
+   selects Python 3.12; `python3 --version` should print 3.12.x (the installed
+   verification interpreter is 3.12.3). Use that same interpreter for setup, the
+   test suite and clean-install checks. Multiple Python installations or a version
+   matrix are not required.
 
 3. **Check Codex.** `codex --version` prints a version, and `codex login status` says you are
    logged in. If not, sign in with the class key the facilitator gives you.

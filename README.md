@@ -163,5 +163,7 @@ the generation directory. Step 6 tests exercise both interruption points and a
 reader paused between its two file reads. Publication relies on local POSIX
 filesystem symlinks, atomic rename and directory/file synchronization.
 
-The plan targets Python 3.10+; verification so far used Python 3.12.3. The task
+The supported runtime is Python 3.12; verification uses the installed Python 3.12.3.
+Clean-install checks use that same interpreter. Testing multiple Python versions
+is not required. The task
 and course instructions are in [CHALLENGE.md](CHALLENGE.md) and [docs/](docs/).

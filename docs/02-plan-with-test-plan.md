@@ -43,6 +43,9 @@ holds and how to check it. Read it once before you start; it is one page.
    - Each row's mock response is named: a saved reply under `tests/mock_responses/`, an error, or a
      cut-off reply. No test calls the real model, and none needs `API_KEY`.
    - The steps put the mock provider first, and each later step names the test written before it.
+   - Choose one supported runtime and verify setup and tests with the same installed
+     interpreter. This application selects Python 3.12; multiple Python versions are
+     not required.
 3. Commit the plan:
 
    ```bash

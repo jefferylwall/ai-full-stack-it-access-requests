@@ -23,3 +23,5 @@ This brief ships as CHALLENGE.md; the README.md below is yours to write.
 Commit and push the application, outputs and session capture to your repository's default branch. Submit only the root repository link (`https://github.com/<your-account>/<repository>`) through the Classroom assignment. The facilitator supplies the assignment and capture instructions.
 
 Submit the implemented provider integration and source-grounded validation procedure. Use mocked responses for reproducible development examples, and label each recorded observation with its configuration and whether it used a mock or provider response. The committed deliverables may come from mocked or provider responses; each record's response_source says which.
+
+Document and verify one supported runtime. Testing multiple Python versions is not required; clean-install checks use the same installed interpreter as the main test suite.

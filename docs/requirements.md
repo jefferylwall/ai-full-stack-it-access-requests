@@ -44,3 +44,5 @@ Include automated tests covering a complete request, missing dates, conflicting 
 
 
 Describe how your implementation supports the operating context above, and include checks for the operational situations your design handles. Record assumptions about workload and shared operation, the expected behavior during interruptions, and the limits of the verification you performed.
+
+Runtime verification uses one documented supported runtime. Run setup, the automated suite and clean-install checks with the same installed interpreter. Testing multiple Python versions is not required.
