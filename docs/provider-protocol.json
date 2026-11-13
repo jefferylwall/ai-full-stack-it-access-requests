@@ -1,0 +1,33 @@
+{
+  "verified_on": "2026-11-13",
+  "verification": "official documentation review only; no live provider call",
+  "selected_model": "gpt-6-luna",
+  "sources": [
+    "https://developers.openai.com/api/docs/models/gpt-6-luna",
+    "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "https://developers.openai.com/api/reference/resources/responses/methods/create"
+  ],
+  "request_defaults": {
+    "provider": "openai",
+    "model": "gpt-6-luna",
+    "endpoint": "https://api.openai.com/v1/responses",
+    "parameters": {"max_output_tokens": 2048, "reasoning": {"effort": "none"}},
+    "stream": false,
+    "background": false,
+    "store": false,
+    "truncation": "disabled",
+    "tools": [],
+    "tool_choice": "none",
+    "schema_name": "access_request",
+    "schema_path": "snapshot.schema.json",
+    "strict": true
+  },
+  "model_notes": "The model page lists Responses, structured outputs and reasoning effort none. The listed snapshot identifier is gpt-6-luna. Save requested configuration and the returned model identifier; availability and access are not proven by this review.",
+  "intended_mapping": {
+    "request": "POST JSON; preserve system/user roles and use text.format with type json_schema, name, strict and the supplied schema. Authenticate only in the HTTP Authorization header.",
+    "completed": "Require completed root/message status and output_text content before local JSON/schema/evidence validation.",
+    "refusal": "Detect a refusal content item and return a neutral refused envelope without using accompanying output text.",
+    "incomplete": "Map incomplete status to interruption, even when output text looks like a complete extraction.",
+    "errors": "Reject malformed or unsupported envelopes. Categorize HTTP and transport failures using safe diagnostics. No hidden retries. These mappings are test contracts until the adapter is implemented."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "resp_empty",
+  "object": "response",
+  "created_at": 0,
+  "status": "completed",
+  "error": null,
+  "incomplete_details": null,
+  "model": "gpt-6-luna",
+  "output": []
+}
