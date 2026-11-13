@@ -1,0 +1,4 @@
+{
+  "state": "completed",
+  "output_text": "{\"request_id\": null, \"request_date\": \"2026-10-22\", \"kind\": \"new\", \"requester\": \"Maya Chen\", \"team\": \"Analytics\", \"system\": \"Atlas\", \"environment\": \"staging\", \"permission\": \"read\", \"business_purpose\": \"checking the weekly conversion dashboard\", \"start_date\": \"2026-10-23\", \"end_date\": \"2026-11-06\", \"manager\": \"Priya Shah\", \"supporting_quotes\": [\"Request date is 2026-10-22.\", \"This is a new access request.\", \"Requester is Maya Chen.\", \"Team is Analytics.\", \"System is Atlas.\", \"Environment is staging.\", \"Requested permission is read.\", \"Business purpose is checking the weekly conversion dashboard.\", \"Start date is 2026-10-23.\", \"End date is 2026-11-06.\", \"Manager is Priya Shah.\"], \"issues\": [\"request_id: absent or unresolved after deletion of its source sentence.\"]}"
+}

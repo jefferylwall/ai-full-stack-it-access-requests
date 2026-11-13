@@ -1,0 +1,27 @@
+{
+  "request_id": "IT-017",
+  "request_date": "2026-10-22",
+  "kind": "other",
+  "requester": "Chloe Martin",
+  "team": "Communications",
+  "system": null,
+  "environment": null,
+  "permission": null,
+  "business_purpose": "I want to update the document before the next bunch start so they're all doing the same thing.",
+  "start_date": null,
+  "end_date": null,
+  "manager": null,
+  "supporting_quotes": [
+    "IT-017 was submitted by Chloe Martin from Communications on 2026-10-22.",
+    "Where can we find the access request form?",
+    "I want to update the document before the next bunch start so they're all doing the same thing."
+  ],
+  "issues": [
+    "system: absent from the informational message.",
+    "environment: absent from the informational message.",
+    "permission: absent from the informational message.",
+    "start_date: absent from the informational message.",
+    "end_date: absent from the informational message.",
+    "manager: absent from the informational message."
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "state": "completed",
+  "output_text": "{\"request_id\": \"IT-020\", \"request_date\": \"2026-10-22\", \"kind\": \"new\", \"requester\": \"Ethan Clark\", \"team\": \"Product\", \"system\": \"Atlas\", \"environment\": \"staging\", \"permission\": \"read\", \"business_purpose\": \"I want to look at some sample usage records before I draft the summary on feature adoption.\", \"start_date\": \"2026-10-29\", \"end_date\": \"2026-11-02\", \"manager\": null, \"supporting_quotes\": [\"IT-020. Dated 2026-10-22. I'm Ethan Clark with Product.\", \"new Atlas read access to staging from 2026-10-29 to 2026-11-02\", \"My manager is Priya Shah.\", \"The manager for this request is Elena Park.\", \"I want to look at some sample usage records before I draft the summary on feature adoption.\"], \"issues\": [\"manager: conflicting Priya Shah and Elena Park statements remain unresolved.\"]}"
+}

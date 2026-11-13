@@ -1,0 +1,25 @@
+{
+  "request_id": "IT-010",
+  "request_date": "2026-10-22",
+  "kind": "new",
+  "requester": "Ben Carter",
+  "team": "Operations",
+  "system": "Ledger",
+  "environment": "production",
+  "permission": "read",
+  "business_purpose": "What I'm looking to do is to compare the daily reconciliation report to the entries that the operations folks see as some of the totals have been hard to explain at the hand-over.",
+  "start_date": "2026-10-27",
+  "end_date": null,
+  "manager": "Elena Park",
+  "supporting_quotes": [
+    "I'm Ben Carter in Operations.",
+    "new access request (IT-010), date of submission is 2026-10-22",
+    "read access to Ledger (production) starting 2026-10-27",
+    "My manager is Elena Park.",
+    "Haven't quite fixed on the end date.",
+    "What I'm looking to do is to compare the daily reconciliation report to the entries that the operations folks see as some of the totals have been hard to explain at the hand-over."
+  ],
+  "issues": [
+    "end_date: the requester has not fixed an end date."
+  ]
+}

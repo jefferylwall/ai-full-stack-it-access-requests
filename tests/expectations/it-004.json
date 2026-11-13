@@ -1,0 +1,24 @@
+{
+  "request_id": "IT-004",
+  "request_date": "2026-10-22",
+  "kind": "new",
+  "requester": "Theo Malik",
+  "team": "Quality Engineering",
+  "system": "Atlas",
+  "environment": null,
+  "permission": "read",
+  "business_purpose": "I'm trying to understand why the nightly quality report shows different counts from the release checklist.",
+  "start_date": "2026-10-23",
+  "end_date": "2026-10-30",
+  "manager": "Nia Patel",
+  "supporting_quotes": [
+    "IT-004 submitted on 2026-10-22 by Theo Malik, Quality Engineering.",
+    "new read access in staging to Atlas from 2026-10-23 to 2026-10-30",
+    "Nia Patel is my manager.",
+    "This request is for the production environment.",
+    "I'm trying to understand why the nightly quality report shows different counts from the release checklist."
+  ],
+  "issues": [
+    "environment: conflicting staging and production statements remain unresolved."
+  ]
+}

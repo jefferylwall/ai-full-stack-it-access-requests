@@ -1,0 +1,29 @@
+{
+  "request_id": "IT-003",
+  "request_date": "2026-10-22",
+  "kind": "new",
+  "requester": "Lina Gomez",
+  "team": "Customer Success",
+  "system": "Beacon",
+  "environment": null,
+  "permission": null,
+  "business_purpose": "I'm trying to get the account notes together before we meet as a team.",
+  "start_date": null,
+  "end_date": null,
+  "manager": "Priya Shah",
+  "supporting_quotes": [
+    "Lina Gomez from Customer Success",
+    "IT-003 on 2026-10-22",
+    "I need new access to Beacon.",
+    "next week",
+    "I didn't note what environment he was on or what the permission is named.",
+    "My manager is Priya Shah.",
+    "I'm trying to get the account notes together before we meet as a team."
+  ],
+  "issues": [
+    "environment: not specified.",
+    "permission: not specified.",
+    "start_date: relative next week is unresolved.",
+    "end_date: no absolute date stated."
+  ]
+}

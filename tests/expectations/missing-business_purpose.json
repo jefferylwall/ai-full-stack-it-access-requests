@@ -1,0 +1,30 @@
+{
+  "request_id": "IT-023",
+  "request_date": "2026-10-22",
+  "kind": "new",
+  "requester": "Maya Chen",
+  "team": "Analytics",
+  "system": "Atlas",
+  "environment": "staging",
+  "permission": "read",
+  "business_purpose": null,
+  "start_date": "2026-10-23",
+  "end_date": "2026-11-06",
+  "manager": "Priya Shah",
+  "supporting_quotes": [
+    "Request ID is IT-023.",
+    "Request date is 2026-10-22.",
+    "This is a new access request.",
+    "Requester is Maya Chen.",
+    "Team is Analytics.",
+    "System is Atlas.",
+    "Environment is staging.",
+    "Requested permission is read.",
+    "Start date is 2026-10-23.",
+    "End date is 2026-11-06.",
+    "Manager is Priya Shah."
+  ],
+  "issues": [
+    "business_purpose: absent or unresolved after deletion of its source sentence."
+  ]
+}

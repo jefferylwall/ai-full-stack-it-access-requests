@@ -1,0 +1,4 @@
+{
+  "state": "completed",
+  "output_text": "{\"request_id\": \"IT-013\", \"request_date\": \"2026-10-22\", \"kind\": \"new\", \"requester\": \"Emma Wilson\", \"team\": \"Compliance\", \"system\": \"Beacon\", \"environment\": \"production\", \"permission\": \"read\", \"business_purpose\": \"Need it from 2026-10-28 to 2026-10-30 to review account activity records to help with internal audit we have scheduled.\", \"start_date\": \"2026-10-28\", \"end_date\": \"2026-10-30\", \"manager\": \"Elena Park\", \"supporting_quotes\": [\"IT-013 (dated 2026-10-22)\", \"Emma Wilson from Compliance\", \"new access to Beacon for reading in production\", \"from 2026-10-28 to 2026-10-30\", \"My manager is Elena Park.\", \"Need it from 2026-10-28 to 2026-10-30 to review account activity records to help with internal audit we have scheduled.\"], \"issues\": []}"
+}
