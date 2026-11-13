@@ -1,48 +1,224 @@
-test_T28_registry_has_all_supplied_source_facts_evidence_and_routes (test_accuracy.AccuracyContract.test_T28_registry_has_all_supplied_source_facts_evidence_and_routes) ... ok
-test_T29_authored_paraphrase_has_independent_expectation_and_fresh_wording (test_accuracy.AccuracyContract.test_T29_authored_paraphrase_has_independent_expectation_and_fresh_wording) ... ok
-test_T30_comparison_counts_corruption_and_keeps_semantic_checks_separate (test_accuracy.AccuracyContract.test_T30_comparison_counts_corruption_and_keeps_semantic_checks_separate) ... ok
-test_T25_CLI_intake_live_reads_retry_history_and_resume (test_cli_exports.CLIExportContract.test_T25_CLI_intake_live_reads_retry_history_and_resume) ... ok
-test_T26_export_fields_coherent_pair_and_no_unfinished_final_status (test_cli_exports.CLIExportContract.test_T26_export_fields_coherent_pair_and_no_unfinished_final_status) ... ok
-test_T27_crashes_around_publication_and_reader_pins_one_generation (test_cli_exports.CLIExportContract.test_T27_crashes_around_publication_and_reader_pins_one_generation) ... ok
-test_T02_all_200_words_reach_provider_intact (test_extraction.ExtractionContract.test_T02_all_200_words_reach_provider_intact) ... ok
-test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines (test_extraction.ExtractionContract.test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines) ... ok
-test_T02_metadata_is_excluded_and_message_is_prompt_data (test_extraction.ExtractionContract.test_T02_metadata_is_excluded_and_message_is_prompt_data) ... ok
-test_T03_schema_matrix (test_extraction.ExtractionContract.test_T03_schema_matrix) ... ok
-test_T04_validation_failures_return_no_partial_extraction (test_extraction.ExtractionContract.test_T04_validation_failures_return_no_partial_extraction) ... ok
-test_T05_relative_dates_stay_null_with_issues (test_extraction.ExtractionContract.test_T05_relative_dates_stay_null_with_issues) ... ok
-test_T34_clean_offline_setup_commands_and_submission_artifacts (test_handover.HandoverContract.test_T34_clean_offline_setup_commands_and_submission_artifacts) ... ok
-test_T35_400_and_2000_documents_preserve_identity_progress_bounds_and_recovery (test_handover.HandoverContract.test_T35_400_and_2000_documents_preserve_identity_progress_bounds_and_recovery) ... ok
+test_accuracy (unittest.loader._FailedTest.test_accuracy) ... ERROR
+test_cli_exports (unittest.loader._FailedTest.test_cli_exports) ... ERROR
+test_T02_all_200_words_reach_provider_intact (test_extraction.ExtractionContract.test_T02_all_200_words_reach_provider_intact) ... ERROR
+test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines (test_extraction.ExtractionContract.test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines) ... ERROR
+test_T02_metadata_is_excluded_and_message_is_prompt_data (test_extraction.ExtractionContract.test_T02_metadata_is_excluded_and_message_is_prompt_data) ... ERROR
+test_T03_schema_matrix (test_extraction.ExtractionContract.test_T03_schema_matrix) ... ERROR
+test_T04_validation_failures_return_no_partial_extraction (test_extraction.ExtractionContract.test_T04_validation_failures_return_no_partial_extraction) ... ERROR
+test_T05_relative_dates_stay_null_with_issues (test_extraction.ExtractionContract.test_T05_relative_dates_stay_null_with_issues) ... ERROR
+test_handover (unittest.loader._FailedTest.test_handover) ... ERROR
 test_T01_saved_envelope_and_source_facts_with_injected_clock (test_mock_provider.MockProviderContract.test_T01_saved_envelope_and_source_facts_with_injected_clock) ... ok
 test_T01_scripted_exception_then_saved_success (test_mock_provider.MockProviderContract.test_T01_scripted_exception_then_saved_success) ... ok
 test_T01_second_call_holds_named_reply_until_release (test_mock_provider.MockProviderContract.test_T01_second_call_holds_named_reply_until_release) ... ok
-test_T31_actual_HTTP_construction_configuration_and_CLI_selection (test_openai_provider.RealAdapterContract.test_T31_actual_HTTP_construction_configuration_and_CLI_selection) ... ok
-test_T32_credentials_never_reach_persisted_errors_logs_evidence_or_override_output (test_openai_provider.RealAdapterContract.test_T32_credentials_never_reach_persisted_errors_logs_evidence_or_override_output) ... ok
-test_T33_refusal_interruption_and_bad_native_envelopes_never_route_partial_text (test_openai_provider.RealAdapterContract.test_T33_refusal_interruption_and_bad_native_envelopes_never_route_partial_text) ... ok
-test_T36_missing_artifacts_links_configuration_and_observation_labels (test_release.ReleaseContract.test_T36_missing_artifacts_links_configuration_and_observation_labels) ... ok
-test_T06_complete_request_awaits_system_owner (test_routing.RoutingContract.test_T06_complete_request_awaits_system_owner) ... ok
-test_T07_missing_end_date_clarifies_before_production_risk (test_routing.RoutingContract.test_T07_missing_end_date_clarifies_before_production_risk) ... ok
-test_T08_conflicts_preserve_alternatives_and_clarify (test_routing.RoutingContract.test_T08_conflicts_preserve_alternatives_and_clarify) ... ok
-test_T09_override_precedes_complete_request_and_withdrawal (test_routing.RoutingContract.test_T09_override_precedes_complete_request_and_withdrawal) ... ok
-test_T10_withdrawals_precede_missing_access_facts (test_routing.RoutingContract.test_T10_withdrawals_precede_missing_access_facts) ... ok
-test_T11_clarification_conditions_and_each_required_fact (test_routing.RoutingContract.test_T11_clarification_conditions_and_each_required_fact) ... ok
-test_T12_explicit_corrections_replace_superseded_facts (test_routing.RoutingContract.test_T12_explicit_corrections_replace_superseded_facts) ... ok
-test_T13_production_or_write_or_admin_requires_risk_review (test_routing.RoutingContract.test_T13_production_or_write_or_admin_requires_risk_review) ... ok
-test_T14_successes_await_humans_and_manager_is_only_contact (test_routing.RoutingContract.test_T14_successes_await_humans_and_manager_is_only_contact) ... ok
+test_openai_provider (unittest.loader._FailedTest.test_openai_provider) ... ERROR
+test_T36_missing_artifacts_links_configuration_and_observation_labels (test_release.ReleaseContract.test_T36_missing_artifacts_links_configuration_and_observation_labels) ... ERROR
+test_routing (unittest.loader._FailedTest.test_routing) ... ERROR
 test_a_mock_reply_is_read_with_no_key_and_no_network (test_starter.MockResponse.test_a_mock_reply_is_read_with_no_key_and_no_network) ... ok
 test_each_request_export_has_message_text_and_a_hash (test_starter.SuppliedFiles.test_each_request_export_has_message_text_and_a_hash) ... ok
 test_the_schema_names_the_fields_it_requires (test_starter.SuppliedFiles.test_the_schema_names_the_fields_it_requires) ... ok
-test_T15_unchanged_success_reuses_attempt_and_producing_provenance (test_store.StoreContract.test_T15_unchanged_success_reuses_attempt_and_producing_provenance) ... ok
-test_T16_changed_bytes_create_revisions_and_retain_original_source (test_store.StoreContract.test_T16_changed_bytes_create_revisions_and_retain_original_source) ... ok
-test_T17_failed_forced_retry_is_current_without_erasing_success (test_store.StoreContract.test_T17_failed_forced_retry_is_current_without_erasing_success) ... ok
-test_T18_omissions_retain_documents_and_shared_request_ids_do_not_merge (test_store.StoreContract.test_T18_omissions_retain_documents_and_shared_request_ids_do_not_merge) ... ok
-test_T19_relevant_settings_refresh_but_operational_settings_do_not (test_store.StoreContract.test_T19_relevant_settings_refresh_but_operational_settings_do_not) ... ok
-test_T20_late_completion_is_historical_and_cannot_replace_latest_generation (test_store.StoreContract.test_T20_late_completion_is_historical_and_cannot_replace_latest_generation) ... ok
-test_T21_provider_failure_does_not_block_independent_success (test_workers.WorkerContract.test_T21_provider_failure_does_not_block_independent_success) ... ok
-test_T22_held_calls_failures_timeouts_pacing_and_explicit_retry (test_workers.WorkerContract.test_T22_held_calls_failures_timeouts_pacing_and_explicit_retry) ... ok
-test_T23_killed_workers_resume_without_losing_committed_work (test_workers.WorkerContract.test_T23_killed_workers_resume_without_losing_committed_work) ... ok
-test_T24_overlapping_operator_processes_fence_expired_worker (test_workers.WorkerContract.test_T24_overlapping_operator_processes_fence_expired_worker) ... ok
+test_store (unittest.loader._FailedTest.test_store) ... ERROR
+test_workers (unittest.loader._FailedTest.test_workers) ... ERROR
+
+======================================================================
+ERROR: test_accuracy (unittest.loader._FailedTest.test_accuracy)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_accuracy
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_accuracy.py", line 18, in <module>
+    from access_intake.extraction import INSTRUCTIONS, SCHEMA
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_cli_exports (unittest.loader._FailedTest.test_cli_exports)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_cli_exports
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_cli_exports.py", line 14, in <module>
+    from access_intake.store import Store
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/store.py", line 21, in <module>
+    from .extraction import validate_completion
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_T02_all_200_words_reach_provider_intact (test_extraction.ExtractionContract.test_T02_all_200_words_reach_provider_intact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_extraction.py", line 127, in test_T02_all_200_words_reach_provider_intact
+    from access_intake.extraction import extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines (test_extraction.ExtractionContract.test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_extraction.py", line 73, in test_T02_capture_hashes_original_bytes_and_keeps_decoded_newlines
+    from access_intake.extraction import extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_T02_metadata_is_excluded_and_message_is_prompt_data (test_extraction.ExtractionContract.test_T02_metadata_is_excluded_and_message_is_prompt_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_extraction.py", line 102, in test_T02_metadata_is_excluded_and_message_is_prompt_data
+    from access_intake.extraction import build_prompt, extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_T03_schema_matrix (test_extraction.ExtractionContract.test_T03_schema_matrix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_extraction.py", line 156, in test_T03_schema_matrix
+    from access_intake.extraction import ExtractionValidationError, validate_schema
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_T04_validation_failures_return_no_partial_extraction (test_extraction.ExtractionContract.test_T04_validation_failures_return_no_partial_extraction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_extraction.py", line 192, in test_T04_validation_failures_return_no_partial_extraction
+    from access_intake.extraction import extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_T05_relative_dates_stay_null_with_issues (test_extraction.ExtractionContract.test_T05_relative_dates_stay_null_with_issues)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_extraction.py", line 219, in test_T05_relative_dates_stay_null_with_issues
+    from access_intake.extraction import extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_handover (unittest.loader._FailedTest.test_handover)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_handover
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_handover.py", line 19, in <module>
+    from access_intake.extraction import INSTRUCTIONS, SCHEMA
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_openai_provider (unittest.loader._FailedTest.test_openai_provider)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_openai_provider
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_openai_provider.py", line 19, in <module>
+    from access_intake.extraction import SCHEMA, build_prompt, extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_T36_missing_artifacts_links_configuration_and_observation_labels (test_release.ReleaseContract.test_T36_missing_artifacts_links_configuration_and_observation_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_release.py", line 77, in test_T36_missing_artifacts_links_configuration_and_observation_labels
+    from access_intake.release import preflight
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/release.py", line 7, in <module>
+    from .exports import pin_export
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/exports.py", line 11, in <module>
+    from .store import Store
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/store.py", line 21, in <module>
+    from .extraction import validate_completion
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+======================================================================
+ERROR: test_routing (unittest.loader._FailedTest.test_routing)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_routing
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_routing.py", line 14, in <module>
+    from access_intake.extraction import extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_store (unittest.loader._FailedTest.test_store)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_store
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_store.py", line 17, in <module>
+    from access_intake.extraction import INSTRUCTIONS, SCHEMA, extract
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_workers (unittest.loader._FailedTest.test_workers)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_workers
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/user/ai-full-stack-it-access-requests/tests/test_workers.py", line 18, in <module>
+    from access_intake.store import Store
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/store.py", line 21, in <module>
+    from .extraction import validate_completion
+  File "/home/user/ai-full-stack-it-access-requests/access_intake/extraction.py", line 12, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
 
 ----------------------------------------------------------------------
-Ran 43 tests in 56.825s
+Ran 20 tests in 0.060s
 
-OK
+FAILED (errors=14)
