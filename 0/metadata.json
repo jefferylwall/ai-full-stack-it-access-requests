@@ -1,0 +1,65 @@
+{
+  "cli_version": "0.13.1",
+  "checkpoint_id": "01M7B7Q0ZBVTB7VNET5R72GPPV",
+  "session_id": "01a1d5f4-88b0-7172-a59e-453b2d633e4c",
+  "strategy": "manual-commit",
+  "created_at": "2026-11-13T19:56:22.89856574Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "save_step_count": 2,
+  "files_touched": [
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/accuracy-report.json",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/accuracy.md",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/extractions.jsonl",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/generation-evidence.json",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/h1-review.json",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/queue.json",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/request-evidence.json",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/verification.md",
+    ".deliverables-generations/2635af56755a404eb09cbbb6c6375642/workload-observations.json",
+    ".gitignore",
+    "README.md",
+    "access_intake/exports.py",
+    "access_intake/extraction.py",
+    "access_intake/handover.py",
+    "access_intake/providers.py",
+    "access_intake/workload.py",
+    "config/extraction-prompt.txt",
+    "deliverables",
+    "planning/test-run.txt",
+    "requirements-bootstrap.lock",
+    "tests/test_starter.py",
+    "tools/install_locked.py",
+    "verification/python310-test-run.txt",
+    "verification/workload-observations.json"
+  ],
+  "agent": "Codex",
+  "model": "gpt-6.1-sol",
+  "turn_id": "e1fb84ba420f",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 47303,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 968320,
+    "output_tokens": 3551,
+    "api_call_count": 12,
+    "subagent_tokens_complete": true
+  },
+  "redaction": {
+    "replacements": 14,
+    "layers": {
+      "betterleaks": 0,
+      "connection_string": 0,
+      "credential_key": 0,
+      "credential_value": 3,
+      "credentialed_uri": 0,
+      "entropy": 16,
+      "key_context": 0,
+      "provider_token": 0,
+      "shell_stdin": 0
+    }
+  },
+  "session_metrics": {
+    "turn_count": 20
+  }
+}
