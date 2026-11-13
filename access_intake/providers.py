@@ -35,6 +35,14 @@ class Provider(Protocol):
 
 
 @dataclass(frozen=True)
+class SavedResponse:
+    """A named reply captured at admission, independent of later fixture edits."""
+
+    identity: str
+    raw_bytes: bytes
+
+
+@dataclass(frozen=True)
 class HeldResponse:
     """Signal arrival, then wait for an explicit release before reading a reply.
 
@@ -57,7 +65,7 @@ class MockProvider:
 
     def __init__(
         self,
-        script: Iterable[str | Path | Exception | HeldResponse],
+        script: Iterable[str | Path | SavedResponse | Exception | HeldResponse],
         *,
         clock: Callable[[], float] = monotonic,
     ) -> None:
@@ -90,5 +98,8 @@ class MockProvider:
             response.entered.set()
             response.release.wait()
             response = response.fixture
+
+        if isinstance(response, SavedResponse):
+            return json.loads(response.raw_bytes.decode("utf-8"))
 
         return json.loads(Path(response).read_text(encoding="utf-8"))

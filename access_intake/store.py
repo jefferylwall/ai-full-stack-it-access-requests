@@ -128,7 +128,8 @@ class Store:
     def __init__(self, path: str | Path, *, clock: Callable[[], float] = time) -> None:
         self.clock = clock
         self._closed = False
-        self._db = sqlite3.connect(path, timeout=5, isolation_level=None)
+        self.path = Path(path).resolve()
+        self._db = sqlite3.connect(self.path, timeout=5, isolation_level=None)
         self._db.row_factory = sqlite3.Row
         self._db.execute("PRAGMA foreign_keys = ON")
         self._db.execute("PRAGMA journal_mode = WAL")

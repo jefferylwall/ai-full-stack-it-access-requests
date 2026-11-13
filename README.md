@@ -5,7 +5,8 @@ source bytes, builds message-only extraction prompts, validates completions,
 supports deterministic offline provider scripts and applies ordered review
 routing. SQLite stores source revisions, attempts and coherent current views.
 Independent workers support leases, finite waits and explicit recovery. The CLI
-is a later step in [the build plan](planning/plan.md).
+provides intake, inspection, recovery, retries and paired export publication.
+The remaining work is tracked in [the build plan](planning/plan.md).
 
 Create a local environment and install the locked dependencies:
 
@@ -24,6 +25,40 @@ env -u API_KEY python3 -m unittest discover -s tests -v
 Tests use saved replies under `tests/mock_responses/`. Extraction tests forbid
 socket access and reads of `API_KEY`. Mock agreement verifies the fixtures and
 application behavior; it does not measure live model accuracy.
+
+Start with a supplied message and inspect it using the mock provider:
+
+```bash
+python3 -m access_intake intake materials/requests/IT-001.json
+python3 -m access_intake queue
+python3 -m access_intake work
+python3 -m access_intake history IT-001.json
+python3 -m access_intake resume
+python3 -m access_intake retry IT-001.json --force
+python3 -m access_intake export --output deliverables
+python3 -m access_intake export --read deliverables
+```
+
+The default database is `.access-intake.sqlite` in the current directory. To share
+another database, put `--database PATH` before the command in every process.
+`intake` accepts files or flat directories of JSON exports. `--mock-dir PATH`
+selects saved replies named by the lowercase document filename, such as
+`it-001.json`; the default directory is `tests/mock_responses/`. Source bytes and
+reply bytes are captured at admission. Retry and resume use those captured bytes
+and producing settings even if the original files have moved or disappeared.
+Mock mode needs no credentials. The complete verification corpus and accuracy
+command are Step 7; the live provider adapter is Step 8.
+
+Commands print JSON. Processing commands return 1 when current work contains
+failures or unfinished attempts, and 0 when all current work succeeded. Usage
+errors return 2. Run `queue` or `work` in another terminal while intake runs.
+Processing states and policy statuses are separate: pending/running work has no
+invented review status. Errors include a quoted, self-contained retry command
+that selects the correct database. `retry DOCUMENT --force` creates a new attempt;
+`resume` recovers expired leases and processes pending work without retrying
+recorded failures. Global worker options also go before the command:
+`--workers`, `--request-timeout`, `--lease-seconds`, `--commit-margin` and
+`--pace-seconds`.
 
 Review routing follows the office policy in order: inspect instruction overrides,
 confirm withdrawals, clarify incomplete/conflicting requests, review risk, then
@@ -60,7 +95,7 @@ without pruning. Duplicate basenames in one intake are rejected before admission
 
 Routing supports the supplied policy and the plan's labelled test-only rule-five
 variant. Other policy changes require a reviewed routing implementation; policy
-prose is not executed. CLI retry commands are not implemented yet.
+prose is not executed.
 
 `WorkerPool` drains claimable pending work using four workers by default. Configure
 `workers`, `request_timeout` (default 30 seconds), `lease_seconds` (40 seconds),
@@ -84,6 +119,24 @@ finite I/O timeouts. Step 5 verification uses saved replies, injected errors and
 actual worker subprocess termination after claim and before commit, plus two
 overlapping operators sharing the local database. It does not verify multi-host
 storage or live-provider behavior.
+
+Export refuses unfinished work. It reads one database snapshot, writes
+`extractions.jsonl` and `queue.json` into a fresh generation under
+`.deliverables-generations/`, flushes them, then atomically replaces the
+`deliverables` symlink. Custom output names use a sibling generation directory
+with the same naming convention. Existing generation files are never rewritten
+or pruned, and exporting does not change attempt history. An existing destination
+that is not a symlink is preserved and the export fails.
+
+External readers must resolve the publication symlink once, then open both files
+under that resolved generation directory. Opening the two files separately
+through `deliverables/` can cross a publication. The CLI's `export --read PATH`
+and Python's `pin_export(PATH).read()` follow the paired-read protocol. A killed
+publisher leaves either the prior complete generation or the new complete
+generation current; staged/orphaned directories are never selected by listing
+the generation directory. Step 6 tests exercise both interruption points and a
+reader paused between its two file reads. Publication relies on local POSIX
+filesystem symlinks, atomic rename and directory/file synchronization.
 
 The plan targets Python 3.10+; verification so far used Python 3.12.3. The task
 and course instructions are in [CHALLENGE.md](CHALLENGE.md) and [docs/](docs/).
