@@ -1,0 +1,22 @@
+{
+  "request_id": "IT-018",
+  "request_date": "2026-10-22",
+  "kind": "new",
+  "requester": "Daniel Wright",
+  "team": "Data Engineering",
+  "system": "Atlas",
+  "environment": "staging",
+  "permission": "read",
+  "business_purpose": "I'd like to try and find the source of the difference prior to the next workshop.",
+  "start_date": "2026-10-27",
+  "end_date": "2026-11-03",
+  "manager": "Priya Shah",
+  "supporting_quotes": [
+    "IT-018, submitted on 2026-10-22",
+    "Daniel Wright in Data Engineering",
+    "new read access to Atlas in staging for the dates 2026-10-27 through 2026-11-03",
+    "My manager is Priya Shah.",
+    "I'd like to try and find the source of the difference prior to the next workshop."
+  ],
+  "issues": []
+}
