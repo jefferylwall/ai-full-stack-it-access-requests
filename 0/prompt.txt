@@ -1,0 +1,5 @@
+go
+
+---
+
+Create `planning/validation.md` with one row per line of `planning/spec.md`
